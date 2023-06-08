@@ -75,7 +75,6 @@ function start() {
     method: 'GET',
     endpoint: '/api/v1/me/roles/',
   });
-  debugger;
 
   return getMeWithRole()
     .then(
@@ -83,8 +82,6 @@ function start() {
         // fill in some missing bootstrap data
         // (because at pageload, we don't have any auth yet)
         // this allows the frontend's permissions checks to work.
-        debugger;
-
         bootstrapData.user = result;
         store.dispatch({
           type: USER_LOADED,
@@ -93,7 +90,6 @@ function start() {
         ReactDOM.render(<EmbeddedApp />, appMountPoint);
       },
       err => {
-        debugger;
         // something is most likely wrong with the guest token
         logging.error(err);
         showFailureMessage(
@@ -102,7 +98,6 @@ function start() {
       },
     )
     .catch(err => {
-      debugger;
     });
 }
 start();
