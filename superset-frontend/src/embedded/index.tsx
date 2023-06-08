@@ -76,29 +76,26 @@ function start() {
     endpoint: '/api/v1/me/roles/',
   });
 
-  return getMeWithRole()
-    .then(
-      ({ result }) => {
-        // fill in some missing bootstrap data
-        // (because at pageload, we don't have any auth yet)
-        // this allows the frontend's permissions checks to work.
-        bootstrapData.user = result;
-        store.dispatch({
-          type: USER_LOADED,
-          user: result,
-        });
-        ReactDOM.render(<EmbeddedApp />, appMountPoint);
-      },
-      err => {
-        // something is most likely wrong with the guest token
-        logging.error(err);
-        showFailureMessage(
-          'Something went wrong with embedded authentication. Check the dev console for details.',
-        );
-      },
-    )
-    .catch(err => {
-    });
+  return getMeWithRole().then(
+    ({ result }) => {
+      // fill in some missing bootstrap data
+      // (because at pageload, we don't have any auth yet)
+      // this allows the frontend's permissions checks to work.
+      bootstrapData.user = result;
+      store.dispatch({
+        type: USER_LOADED,
+        user: result,
+      });
+      ReactDOM.render(<EmbeddedApp />, appMountPoint);
+    },
+    err => {
+      // something is most likely wrong with the guest token
+      logging.error(err);
+      showFailureMessage(
+        'Something went wrong with embedded authentication. Check the dev console for details.',
+      );
+    },
+  );
 }
 start();
 log('embed page is ready to receive messages');
